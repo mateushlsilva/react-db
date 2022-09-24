@@ -24,7 +24,7 @@ usersRoute.get('/users/:uuid', async(req: Request<{ uuid: string }>, res: Respon
     }
 })
 
-usersRoute.post('/cadastrar', async (req: Request, res: Response, next: NextFunction)=>{
+usersRoute.post('/users/cadastrar', async (req: Request, res: Response, next: NextFunction)=>{
     const newUser = req.body
     await users.create(newUser)
     .then(() =>{
@@ -40,7 +40,7 @@ usersRoute.post('/cadastrar', async (req: Request, res: Response, next: NextFunc
     })
 })
 
-usersRoute.put('/modificar/:uuid', async(req: Request<{ uuid: string }>, res: Response, next: NextFunction)=>{
+usersRoute.put('/users/modificar/:uuid', async(req: Request<{ uuid: string }>, res: Response, next: NextFunction)=>{
     const uuid = req.params.uuid;
     const modifiedUser = req.body;
     modifiedUser.uuid = uuid
@@ -63,7 +63,7 @@ usersRoute.put('/modificar/:uuid', async(req: Request<{ uuid: string }>, res: Re
 })
 
 
-usersRoute.delete('/deletar/:uuid', async(req: Request<{ uuid: string }>, res: Response, next: NextFunction)=>{
+usersRoute.delete('/users/deletar/:uuid', async(req: Request<{ uuid: string }>, res: Response, next: NextFunction)=>{
     const uuid = req.params.uuid;
     await users.destroy({
         where: {

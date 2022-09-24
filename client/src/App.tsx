@@ -1,4 +1,7 @@
 import { Component } from "react";
+import CadastradorCliente from "../src/cadastradores/cadastradorCliente";
+import { Axios } from "axios";
+const axios = require('axios').default;
 
 type state = {
   pnome: string,
@@ -40,6 +43,26 @@ class App extends Component<any, state> {
     console.log(this.state.email)
   }
 
+  postUser = async () => {
+    try {
+      axios({
+        method: "post",
+        url: "https://localhost:3001/users/cadastrar/",
+        contentType: 'application/json',
+        cache: false,
+        dataType: 'json',
+        data: JSON.stringify({
+          name: this.obterPnome,
+          email: this.obterEmail,
+          senha: this.obterPassword,
+        }),
+      });
+    } catch (error) {
+      console.error(Error);
+    }
+  }
+  
+
   render() {
     return (
       <div className="row">
@@ -64,7 +87,7 @@ class App extends Component<any, state> {
           </div>
           <div className="row">
             <div className="col s12">
-              <button type="submit">Enviar</button>
+              <button type="submit" onClick={this.postUser}>Enviar</button>
             </div>
           </div>
         </form>
