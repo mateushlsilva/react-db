@@ -1,39 +1,38 @@
-import { Component } from "react";
-import CadastradorCliente from "../src/cadastradores/cadastradorCliente";
-import { Axios } from "axios";
-const axios = require('axios').default;
+import React, { Component} from 'react';
+import './App.css';
+import axios from 'axios';
 
 type state = {
-  pnome: string,
-  password: string;
+  nome: string,
+  senha: string;
   email: string
 }
-class App extends Component<any, state> {
+class App extends Component <any, state>{
   constructor(props: any) {
     super(props)
     this.state = {
-      pnome: '',
-      password: '',
+      nome: '',
+      senha: '',
       email: ''
     }
   }
-
+  
   eventoFormulario = (evento: any) => {
     evento.preventDefault()
   }
 
-  obterPnome = (evento: any) => {
+  obterNome = (evento: any) => {
     this.setState({
-      pnome: evento.target.value
+      nome: evento.target.value
     })
-    console.log(this.state.pnome)
+    console.log(this.state.nome)
   }
 
-  obterPassword = (evento: any) => {
+  obterSenha = (evento: any) => {
     this.setState({
-      password: evento.target.value
+      senha: evento.target.value
     })
-    console.log(this.state.password)
+    console.log(this.state.senha)
   }
 
   obterEmail = (evento: any) => {
@@ -43,56 +42,31 @@ class App extends Component<any, state> {
     console.log(this.state.email)
   }
 
-  postUser = async () => {
-    try {
-      axios({
-        method: "post",
-        url: "https://localhost:3001/users/cadastrar/",
-        contentType: 'application/json',
-        cache: false,
-        dataType: 'json',
-        data: JSON.stringify({
-          name: this.obterPnome,
-          email: this.obterEmail,
-          senha: this.obterPassword,
-        }),
-      });
-    } catch (error) {
-      console.error(Error);
-    }
-  }
+  postClickButton = () =>{
+   axios.post("http://localhost:3001/users/cadastrar",{
+    name: this.state.nome,
+    senha: this.state.senha,
+    email: this.state.email
+  })
   
+  }
 
-  render() {
+  render(){
+      
     return (
-      <div className="row">
-        <form className="col s12" onSubmit={this.eventoFormulario}>
-          <div className="row">
-            <div className="input-field col s6">
-              <input value={this.state.pnome} onChange={this.obterPnome} id="first_name" type="text" className="validate" />
-              <label htmlFor="first_name">Primeiro nome</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input value={this.state.password} onChange={this.obterPassword} id="password" type="password" className="validate" />
-              <label htmlFor="password">Password</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input value={this.state.email} onChange={this.obterEmail} id="email" type="email" className="validate" />
-              <label htmlFor="email">Email</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col s12">
-              <button type="submit" onClick={this.postUser}>Enviar</button>
-            </div>
-          </div>
-        </form>
+      <form onSubmit={this.eventoFormulario}>
+      <div>
+        <p>Nome:</p>
+        <input type="text" name="name" onChange={this.obterNome}/><br></br>
+        <p>email</p>
+        <input type="email" name='email'onChange={this.obterEmail}/><br />
+        <p>senha</p>
+        <input type="password" name="senha" onChange={this.obterSenha}/>
+        <input type="button" value="enviar" onClick={this.postClickButton} />
       </div>
-    )
+      </form>
+    );
   }
 }
+
 export default App;
