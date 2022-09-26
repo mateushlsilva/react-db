@@ -1,9 +1,9 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { StatusCodes } from 'http-status-codes';
 
-
 const usersRoute = Router();
 const users = require('../models/userTable')
+
 
 usersRoute.get('/users', async(req: Request, res: Response, next: NextFunction)=>{
     const usersList = await users.findAll();
