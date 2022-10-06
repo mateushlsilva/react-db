@@ -13,7 +13,7 @@ class App extends Component <any, state>{
     this.state = {
       nome: '',
       senha: '',
-      email: ''
+      email: '',
     }
   }
   
